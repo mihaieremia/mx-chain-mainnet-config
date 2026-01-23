@@ -66,7 +66,7 @@ ProcessConfigsByEpoch = [
 
 ProcessConfigsByRound = [
     { EnableRound = 0, MaxRoundsWithoutNewBlockReceived = 10, MaxRoundsWithoutCommittedBlock = 10, RoundModulusTriggerWhenSyncIsStuck = 20, MaxSyncWithErrorsAllowed = 10, MaxRoundsToKeepUnprocessedMiniBlocks = 300, MaxRoundsToKeepUnprocessedTransactions = 300, NumFloodingRoundsFastReacting = 10, NumFloodingRoundsSlowReacting = 2, NumFloodingRoundsOutOfSpecs = 2 },
-    { EnableRound = 28842527, MaxRoundsWithoutNewBlockReceived = 100, MaxRoundsWithoutCommittedBlock = 100, RoundModulusTriggerWhenSyncIsStuck = 200, MaxSyncWithErrorsAllowed = 100, MaxRoundsToKeepUnprocessedMiniBlocks = 3000, MaxRoundsToKeepUnprocessedTransactions = 3000, NumFloodingRoundsFastReacting = 100, NumFloodingRoundsSlowReacting = 20, NumFloodingRoundsOutOfSpecs = 20 },
+    { EnableRound = 28843556, MaxRoundsWithoutNewBlockReceived = 100, MaxRoundsWithoutCommittedBlock = 100, RoundModulusTriggerWhenSyncIsStuck = 200, MaxSyncWithErrorsAllowed = 100, MaxRoundsToKeepUnprocessedMiniBlocks = 3000, MaxRoundsToKeepUnprocessedTransactions = 3000, NumFloodingRoundsFastReacting = 100, NumFloodingRoundsSlowReacting = 20, NumFloodingRoundsOutOfSpecs = 20 },
 ]
 
 EpochStartConfigsByEpoch = [
@@ -76,7 +76,7 @@ EpochStartConfigsByEpoch = [
 
 EpochStartConfigsByRound = [
     { EnableRound = 0, MaxRoundsWithoutCommittedStartInEpochBlock = 50 },
-    { EnableRound = 28842527, MaxRoundsWithoutCommittedStartInEpochBlock = 500 },
+    { EnableRound = 28843556, MaxRoundsWithoutCommittedStartInEpochBlock = 500 },
 ]
 
 ConsensusConfigsByEpoch = [
@@ -94,7 +94,7 @@ ConsensusConfigsByEpoch = [
         # The value of StartEpoch parameter for version 2 should be the same with the ScheduledMiniBlocksEnableEpoch flag from enableEpoch.toml file
         { StartEpoch = 613, StartRound = 0, Version = "2" },
         # TODO The value of StartEpoch parameter for version 3 should be the same with the SupernovaEnableEpoch flag from enableEpoch.toml file and StartRound the same with the SupernovaEnableRound flag from enableRounds.toml
-        { StartEpoch = 2007, StartRound = 28842527, Version = "3" },
+        { StartEpoch = 2007, StartRound = 28843556, Version = "3" },
     ]
 
 [StoragePruning]
