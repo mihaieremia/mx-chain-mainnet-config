@@ -19,14 +19,8 @@ services:
     <<: *node-common
     container_name: mvx-observer-shard-0
     volumes:
-      - type: bind
-        source: ./data/shard-0/db
-        target: /go/mx-chain-go/cmd/node/db
-        is_directory: true
-      - type: bind
-        source: ./data/shard-0/logs
-        target: /go/mx-chain-go/cmd/node/logs
-        is_directory: true
+      - shard-0-db:/go/mx-chain-go/cmd/node/db
+      - shard-0-logs:/go/mx-chain-go/cmd/node/logs
     command:
       - --destination-shard-as-observer=0
       - --log-level=*:INFO
@@ -42,14 +36,8 @@ services:
     <<: *node-common
     container_name: mvx-observer-shard-1
     volumes:
-      - type: bind
-        source: ./data/shard-1/db
-        target: /go/mx-chain-go/cmd/node/db
-        is_directory: true
-      - type: bind
-        source: ./data/shard-1/logs
-        target: /go/mx-chain-go/cmd/node/logs
-        is_directory: true
+      - shard-1-db:/go/mx-chain-go/cmd/node/db
+      - shard-1-logs:/go/mx-chain-go/cmd/node/logs
     command:
       - --destination-shard-as-observer=1
       - --log-level=*:INFO
@@ -65,14 +53,8 @@ services:
     <<: *node-common
     container_name: mvx-observer-shard-2
     volumes:
-      - type: bind
-        source: ./data/shard-2/db
-        target: /go/mx-chain-go/cmd/node/db
-        is_directory: true
-      - type: bind
-        source: ./data/shard-2/logs
-        target: /go/mx-chain-go/cmd/node/logs
-        is_directory: true
+      - shard-2-db:/go/mx-chain-go/cmd/node/db
+      - shard-2-logs:/go/mx-chain-go/cmd/node/logs
     command:
       - --destination-shard-as-observer=2
       - --log-level=*:INFO
@@ -88,14 +70,8 @@ services:
     <<: *node-common
     container_name: mvx-observer-metachain
     volumes:
-      - type: bind
-        source: ./data/metachain/db
-        target: /go/mx-chain-go/cmd/node/db
-        is_directory: true
-      - type: bind
-        source: ./data/metachain/logs
-        target: /go/mx-chain-go/cmd/node/logs
-        is_directory: true
+      - metachain-db:/go/mx-chain-go/cmd/node/db
+      - metachain-logs:/go/mx-chain-go/cmd/node/logs
     command:
       - --destination-shard-as-observer=metachain
       - --log-level=*:INFO
@@ -129,6 +105,16 @@ services:
       timeout: 10s
       retries: 3
       start_period: 30s
+
+volumes:
+  shard-0-db:
+  shard-0-logs:
+  shard-1-db:
+  shard-1-logs:
+  shard-2-db:
+  shard-2-logs:
+  metachain-db:
+  metachain-logs:
 
 networks:
   squad-network:
