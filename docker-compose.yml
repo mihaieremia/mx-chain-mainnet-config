@@ -1,0 +1,98 @@
+version: "3.8"
+
+x-node-common: &node-common
+  build:
+    context: .
+    dockerfile: docker/Dockerfile
+  restart: unless-stopped
+  healthcheck:
+    test: ["CMD", "curl", "-f", "http://localhost:8080/node/status"]
+    interval: 30s
+    timeout: 10s
+    retries: 3
+    start_period: 120s
+
+services:
+  observer-shard-0:
+    <<: *node-common
+    container_name: mvx-observer-shard-0
+    ports:
+      - "8080:8080"
+      - "37373:37373"
+    volumes:
+      - type: bind
+        source: ./data/shard-0/db
+        target: /go/mx-chain-go/cmd/node/db
+        is_directory: true
+      - type: bind
+        source: ./data/shard-0/logs
+        target: /go/mx-chain-go/cmd/node/logs
+        is_directory: true
+    command:
+      - --destination-shard-as-observer=0
+      - --log-level=*:INFO
+      - --log-save
+      - --display-name=Observer-Shard-0
+
+  observer-shard-1:
+    <<: *node-common
+    container_name: mvx-observer-shard-1
+    ports:
+      - "8081:8080"
+      - "37374:37373"
+    volumes:
+      - type: bind
+        source: ./data/shard-1/db
+        target: /go/mx-chain-go/cmd/node/db
+        is_directory: true
+      - type: bind
+        source: ./data/shard-1/logs
+        target: /go/mx-chain-go/cmd/node/logs
+        is_directory: true
+    command:
+      - --destination-shard-as-observer=1
+      - --log-level=*:INFO
+      - --log-save
+      - --display-name=Observer-Shard-1
+
+  observer-shard-2:
+    <<: *node-common
+    container_name: mvx-observer-shard-2
+    ports:
+      - "8082:8080"
+      - "37375:37373"
+    volumes:
+      - type: bind
+        source: ./data/shard-2/db
+        target: /go/mx-chain-go/cmd/node/db
+        is_directory: true
+      - type: bind
+        source: ./data/shard-2/logs
+        target: /go/mx-chain-go/cmd/node/logs
+        is_directory: true
+    command:
+      - --destination-shard-as-observer=2
+      - --log-level=*:INFO
+      - --log-save
+      - --display-name=Observer-Shard-2
+
+  observer-metachain:
+    <<: *node-common
+    container_name: mvx-observer-metachain
+    ports:
+      - "8083:8080"
+      - "37376:37373"
+    volumes:
+      - type: bind
+        source: ./data/metachain/db
+        target: /go/mx-chain-go/cmd/node/db
+        is_directory: true
+      - type: bind
+        source: ./data/metachain/logs
+        target: /go/mx-chain-go/cmd/node/logs
+        is_directory: true
+    command:
+      - --destination-shard-as-observer=metachain
+      - --log-level=*:INFO
+      - --log-save
+      - --display-name=Observer-Metachain
