@@ -24,4 +24,4 @@ COPY --from=builder /config/config.toml /go/proxy/config/config.toml
 
 WORKDIR /go/proxy
 EXPOSE 8079
-ENTRYPOINT ["/go/proxy/proxy", "--config", "/go/proxy/config/config.toml"]
+ENTRYPOINT ["/go/proxy/proxy", "--config", "/go/proxy/config/config.toml", "--start-swagger-ui"]
