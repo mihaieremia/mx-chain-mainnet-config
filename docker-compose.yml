@@ -107,10 +107,6 @@ services:
     restart: unless-stopped
     ports:
       - "8079:8079"
-    volumes:
-      - type: bind
-        source: ./proxy/config/config.toml
-        target: /go/proxy/config/config.toml
     depends_on:
       - observer-shard-0
       - observer-shard-1
