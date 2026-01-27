@@ -83,6 +83,66 @@ services:
       squad-network:
         ipv4_address: 10.0.0.3
 
+  termui-shard-0:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.termui
+    container_name: mvx-termui-shard-0
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    depends_on:
+      - observer-shard-0
+    command:
+      - --address=10.0.0.6:8080
+    networks:
+      - squad-network
+
+  termui-shard-1:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.termui
+    container_name: mvx-termui-shard-1
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    depends_on:
+      - observer-shard-1
+    command:
+      - --address=10.0.0.5:8080
+    networks:
+      - squad-network
+
+  termui-shard-2:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.termui
+    container_name: mvx-termui-shard-2
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    depends_on:
+      - observer-shard-2
+    command:
+      - --address=10.0.0.4:8080
+    networks:
+      - squad-network
+
+  termui-metachain:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.termui
+    container_name: mvx-termui-metachain
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    depends_on:
+      - observer-metachain
+    command:
+      - --address=10.0.0.3:8080
+    networks:
+      - squad-network
+
   proxy:
     build:
       context: .
