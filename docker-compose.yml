@@ -31,6 +31,8 @@ services:
       - --destination-shard-as-observer=0
       - --log-level=*:INFO
       - --log-save
+      - --log-logger-name
+      - --log-correlation
       - --display-name=Observer-Shard-0
     networks:
       squad-network:
@@ -52,6 +54,8 @@ services:
       - --destination-shard-as-observer=1
       - --log-level=*:INFO
       - --log-save
+      - --log-logger-name
+      - --log-correlation
       - --display-name=Observer-Shard-1
     networks:
       squad-network:
@@ -73,6 +77,8 @@ services:
       - --destination-shard-as-observer=2
       - --log-level=*:INFO
       - --log-save
+      - --log-logger-name
+      - --log-correlation
       - --display-name=Observer-Shard-2
     networks:
       squad-network:
@@ -94,6 +100,8 @@ services:
       - --destination-shard-as-observer=metachain
       - --log-level=*:INFO
       - --log-save
+      - --log-logger-name
+      - --log-correlation
       - --display-name=Observer-Metachain
     networks:
       squad-network:

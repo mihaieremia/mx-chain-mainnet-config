@@ -420,7 +420,7 @@ ConsensusConfigsByEpoch = [
         Name = "AccountsTrieStorage"
         Capacity = 500000
         Type = "SizeLRU"
-        SizeInBytes = 314572800 #300MB
+        SizeInBytes = 524288000 #500MB
     [AccountsTrieStorage.DB]
         FilePath = "AccountsTrie"
         Type = "LvlDBSerial"
@@ -472,7 +472,7 @@ ConsensusConfigsByEpoch = [
 [TrieStorageManagerConfig]
     PruningBufferLen = 100000
     SnapshotsBufferLen = 1000000
-    SnapshotsGoroutineNum = 200
+    SnapshotsGoroutineNum = 400
 
 [HeadersPoolConfig]
     MaxHeadersPerShard = 1000
@@ -522,9 +522,9 @@ ConsensusConfigsByEpoch = [
 
 [TrieNodesChunksDataPool]
     Name = "TrieNodesDataPool"
-    Capacity = 400
+    Capacity = 1000
     Type = "SizeLRU"
-    SizeInBytes = 104857600 #100MB
+    SizeInBytes = 209715200 #200MB
 
 [SmartContractDataPool]
     Name = "SmartContractDataPool"
@@ -614,8 +614,8 @@ ConsensusConfigsByEpoch = [
     BadRatedCacheCapacity = 5000
 
 [TrieSyncStorage]
-    Capacity = 300000
-    SizeInBytes = 104857600 #100MB
+    Capacity = 500000
+    SizeInBytes = 209715200 #200MB
     EnableDB = false
     [TrieSyncStorage.DB]
         FilePath = "TrieSyncStorageDB"
@@ -628,7 +628,7 @@ ConsensusConfigsByEpoch = [
 [Antiflood]
     Enabled = true
     NumConcurrentResolverJobs = 50
-    NumConcurrentResolvingTrieNodesJobs = 3
+    NumConcurrentResolvingTrieNodesJobs = 10
     [Antiflood.FastReacting]
         IntervalInSeconds = 1
         ReservedPercent   = 20.0
@@ -1057,16 +1057,16 @@ ConsensusConfigsByEpoch = [
     LogFileLifeSpanInSec = 86400 # 1 day
 
 [TrieSync]
-    NumConcurrentTrieSyncers  = 200
-    MaxHardCapForMissingNodes = 5000
+    NumConcurrentTrieSyncers  = 400
+    MaxHardCapForMissingNodes = 10000
     #available versions: 1, 2 and 3. 1 is the initial version, 2 is updated, more efficient version employing 2 lists
     #the 3-rd one uses depth-first algorithm which keeps the memory consumption low
     TrieSyncerVersion         = 3
     CheckNodesOnDisk          = false
 
 [Requesters]
-    NumCrossShardPeers  = 2
-    NumTotalPeers       = 3 # NumCrossShardPeers + num intra shard
+    NumCrossShardPeers  = 4
+    NumTotalPeers       = 6 # NumCrossShardPeers + num intra shard
     NumFullHistoryPeers = 3
 
 [HeartbeatV2]
