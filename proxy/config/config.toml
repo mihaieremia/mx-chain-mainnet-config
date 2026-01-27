@@ -77,24 +77,24 @@
 # Snapshotless observers are observers that can only respond to real-time requests, such as vm queries. They should have IsSnapshotless = true
 [[Observers]]
    ShardId = 0
-   Address = "http://10.0.0.6:8080"
+   Address = "http://observer-shard-0:8080"
    IsSnapshotless = false
    IsFallback = false
 
 [[Observers]]
    ShardId = 1
-   Address = "http://10.0.0.5:8080"
+   Address = "http://observer-shard-1:8080"
    IsSnapshotless = false
    IsFallback = false
 
 [[Observers]]
    ShardId = 2
-   Address = "http://10.0.0.4:8080"
+   Address = "http://observer-shard-2:8080"
    IsSnapshotless = false
    IsFallback = false
 
 [[Observers]]
    ShardId = 4294967295
-   Address = "http://10.0.0.3:8080"
+   Address = "http://observer-metachain:8080"
    IsSnapshotless = false
    IsFallback = false

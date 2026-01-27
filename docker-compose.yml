@@ -28,9 +28,6 @@ services:
       - --log-logger-name
       - --log-correlation
       - --display-name=Observer-Shard-0
-    networks:
-      squad-network:
-        ipv4_address: 10.0.0.6
 
   observer-shard-1:
     <<: *node-common
@@ -45,9 +42,6 @@ services:
       - --log-logger-name
       - --log-correlation
       - --display-name=Observer-Shard-1
-    networks:
-      squad-network:
-        ipv4_address: 10.0.0.5
 
   observer-shard-2:
     <<: *node-common
@@ -62,9 +56,6 @@ services:
       - --log-logger-name
       - --log-correlation
       - --display-name=Observer-Shard-2
-    networks:
-      squad-network:
-        ipv4_address: 10.0.0.4
 
   observer-metachain:
     <<: *node-common
@@ -79,9 +70,6 @@ services:
       - --log-logger-name
       - --log-correlation
       - --display-name=Observer-Metachain
-    networks:
-      squad-network:
-        ipv4_address: 10.0.0.3
 
   termui-shard-0:
     build:
@@ -94,7 +82,7 @@ services:
     depends_on:
       - observer-shard-0
     command:
-      - --address=10.0.0.6:8080
+      - --address=observer-shard-0:8080
     networks:
       - squad-network
 
@@ -109,7 +97,7 @@ services:
     depends_on:
       - observer-shard-1
     command:
-      - --address=10.0.0.5:8080
+      - --address=observer-shard-1:8080
     networks:
       - squad-network
 
@@ -124,7 +112,7 @@ services:
     depends_on:
       - observer-shard-2
     command:
-      - --address=10.0.0.4:8080
+      - --address=observer-shard-2:8080
     networks:
       - squad-network
 
@@ -139,7 +127,7 @@ services:
     depends_on:
       - observer-metachain
     command:
-      - --address=10.0.0.3:8080
+      - --address=observer-metachain:8080
     networks:
       - squad-network
 
@@ -157,8 +145,7 @@ services:
       - observer-shard-2
       - observer-metachain
     networks:
-      squad-network:
-        ipv4_address: 10.0.0.2
+      - squad-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8079/network/config"]
       interval: 30s
@@ -179,6 +166,3 @@ volumes:
 networks:
   squad-network:
     driver: bridge
-    ipam:
-      config:
-        - subnet: 10.0.0.0/24
