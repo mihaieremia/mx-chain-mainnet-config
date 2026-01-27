@@ -17,7 +17,7 @@ services:
     <<: *node-common
     container_name: mvx-observer-shard-0
     ports:
-      - "8080:8080"
+      - "10000:8080"
       - "37373:37373"
     volumes:
       - type: bind
@@ -38,7 +38,7 @@ services:
     <<: *node-common
     container_name: mvx-observer-shard-1
     ports:
-      - "8081:8080"
+      - "10001:8080"
       - "37374:37373"
     volumes:
       - type: bind
@@ -59,7 +59,7 @@ services:
     <<: *node-common
     container_name: mvx-observer-shard-2
     ports:
-      - "8082:8080"
+      - "10002:8080"
       - "37375:37373"
     volumes:
       - type: bind
@@ -80,7 +80,7 @@ services:
     <<: *node-common
     container_name: mvx-observer-metachain
     ports:
-      - "8083:8080"
+      - "10003:8080"
       - "37376:37373"
     volumes:
       - type: bind
