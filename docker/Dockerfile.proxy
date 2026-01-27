@@ -1,0 +1,24 @@
+FROM golang:1.23.6 AS builder
+LABEL maintainer="multiversx"
+
+WORKDIR /config
+COPY proxyVersion .
+
+WORKDIR /go
+RUN git clone https://github.com/multiversx/mx-chain-proxy-go.git && \
+    cd mx-chain-proxy-go && \
+    git checkout --force $(cat /config/proxyVersion)
+
+WORKDIR /go/mx-chain-proxy-go/cmd/proxy
+RUN go build -v
+
+# ===== SECOND STAGE ======
+FROM ubuntu:22.04
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y curl
+
+COPY --from=builder /go/mx-chain-proxy-go/cmd/proxy/proxy /go/proxy/proxy
+COPY --from=builder /go/mx-chain-proxy-go/cmd/proxy/config /go/proxy/config
+
+WORKDIR /go/proxy
+EXPOSE 8079
+ENTRYPOINT ["/go/proxy/proxy", "--config", "/go/proxy/config/config.toml"]
