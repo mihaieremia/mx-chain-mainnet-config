@@ -39,4 +39,4 @@ COPY --from=builder "/lib_${TARGETARCH}/*" "/lib/"
 
 WORKDIR /go/mx-chain-go/cmd/node/
 EXPOSE 8080
-ENTRYPOINT ["/go/mx-chain-go/cmd/node/node", "--rest-api-interface=:8080"]
+ENTRYPOINT ["/go/mx-chain-go/cmd/node/node", "--rest-api-interface=:8080", "--working-directory=/go/mx-chain-go/cmd/node"]
