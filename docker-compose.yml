@@ -22,6 +22,7 @@ services:
       - shard-0-db:/go/mx-chain-go/cmd/node/db
       - shard-0-logs:/go/mx-chain-go/cmd/node/logs
     command:
+      - --working-directory=/go/mx-chain-go/cmd/node
       - --destination-shard-as-observer=0
       - --log-level=*:INFO
       - --log-save
@@ -36,6 +37,7 @@ services:
       - shard-1-db:/go/mx-chain-go/cmd/node/db
       - shard-1-logs:/go/mx-chain-go/cmd/node/logs
     command:
+      - --working-directory=/go/mx-chain-go/cmd/node
       - --destination-shard-as-observer=1
       - --log-level=*:INFO
       - --log-save
@@ -50,6 +52,7 @@ services:
       - shard-2-db:/go/mx-chain-go/cmd/node/db
       - shard-2-logs:/go/mx-chain-go/cmd/node/logs
     command:
+      - --working-directory=/go/mx-chain-go/cmd/node
       - --destination-shard-as-observer=2
       - --log-level=*:INFO
       - --log-save
@@ -64,6 +67,7 @@ services:
       - metachain-db:/go/mx-chain-go/cmd/node/db
       - metachain-logs:/go/mx-chain-go/cmd/node/logs
     command:
+      - --working-directory=/go/mx-chain-go/cmd/node
       - --destination-shard-as-observer=metachain
       - --log-level=*:INFO
       - --log-save
