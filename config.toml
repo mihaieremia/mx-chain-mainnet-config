@@ -67,9 +67,6 @@ ProcessConfigsByRound = [
     MaxSyncWithErrorsAllowed = 10,
     MaxRoundsToKeepUnprocessedMiniBlocks = 300,
     MaxRoundsToKeepUnprocessedTransactions = 300,
-    NumFloodingRoundsFastReacting = 10,
-    NumFloodingRoundsSlowReacting = 2,
-    NumFloodingRoundsOutOfSpecs = 2,
     # MaxConsecutiveRoundsOfRatingDecrease represents the max number of consecutive rounds in which a block is not proposed
     # on a shard and the validators' rating could be decreased. If, for instance, a shard gets stuck for more rounds
     # than this value, then the validators rating decrease should stop so they won't get jailed
@@ -86,9 +83,6 @@ ProcessConfigsByRound = [
     MaxSyncWithErrorsAllowed = 100,
     MaxRoundsToKeepUnprocessedMiniBlocks = 3000,
     MaxRoundsToKeepUnprocessedTransactions = 3000,
-    NumFloodingRoundsFastReacting = 100,
-    NumFloodingRoundsSlowReacting = 20,
-    NumFloodingRoundsOutOfSpecs = 20,
     MaxConsecutiveRoundsOfRatingDecrease = 6000,
     MaxRoundsOfInactivityAccepted = 30
     }
@@ -519,6 +513,12 @@ ConsensusConfigsByEpoch = [
     SelectionGasBandwidthIncreaseScheduledPercent = 260
     SelectionGasRequested = 10_000_000_000
 
+[AOTSelection]
+    # Ahead-of-Time transaction selection - pre-selects transactions before consensus round
+    Enabled = true
+    CacheSize = 10                                          # Number of pre-selection results to cache
+    SelectionTimeoutMs = 150                                # Max time for AOT selection in milliseconds
+
 [TrieNodesChunksDataPool]
     Name = "TrieNodesDataPool"
     Capacity = 400
@@ -629,7 +629,6 @@ ConsensusConfigsByEpoch = [
 
 [Antiflood]
     Enabled = true
-
     [[Antiflood.ConfigsByRound]]
         Round = 0
         NumConcurrentResolverJobs = 50
@@ -704,8 +703,8 @@ ConsensusConfigsByEpoch = [
             MaxDeviationTimeInMilliseconds = 25
 
     [[Antiflood.ConfigsByRound]]
-        Round = 440
-        NumConcurrentResolverJobs = 50 # TODO: analyse for meta on bootstrap there was a constant used with value 10
+        Round = 99999999
+        NumConcurrentResolverJobs = 50
         NumConcurrentResolvingTrieNodesJobs = 3
 
         [Antiflood.ConfigsByRound.FastReacting]
@@ -775,7 +774,7 @@ ConsensusConfigsByEpoch = [
             # less than the specified max value. This is used to create desynchronizations between senders as to not
             # clutter the network exactly in the same moment
             MaxDeviationTimeInMilliseconds = 25
-            # Antiflood config ends here for Supernova
+    # Antiflood config ends here for Supernova
 
 [WebServerAntiflood]
     WebServerAntifloodEnabled = true
@@ -893,6 +892,7 @@ ConsensusConfigsByEpoch = [
 [BlockSizeThrottleConfig]
     MinSizeInBytes = 104857 # 104857 is 10% from 1MB
     MaxSizeInBytes = 943718 # 943718 is 90% from 1MB
+    MaxExecResSizeInBytes = 104857 # 104857 is 10% from 1MB
 
 [VirtualMachine]
     [VirtualMachine.Execution]
@@ -1182,6 +1182,10 @@ ConsensusConfigsByEpoch = [
 
 [InterceptedDataVerifier]
     EnableCaching = true
+    CacheSpanInSec = 30
+    CacheExpiryInSec = 30
+
+[DirectSentTransactions]
     CacheSpanInSec = 30
     CacheExpiryInSec = 30
 
