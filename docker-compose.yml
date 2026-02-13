@@ -25,7 +25,7 @@ services:
       - --working-directory=/go/mx-chain-go/cmd/node
       - --start-in-epoch=true
       - --destination-shard-as-observer=0
-      - --log-level=*:INFO
+      - --log-level=*:DEBUG
       - --log-save
       - --log-logger-name
       - --log-correlation
@@ -41,7 +41,7 @@ services:
       - --working-directory=/go/mx-chain-go/cmd/node
       - --start-in-epoch=true
       - --destination-shard-as-observer=1
-      - --log-level=*:INFO
+      - --log-level=*:DEBUG
       - --log-save
       - --log-logger-name
       - --log-correlation
@@ -57,7 +57,7 @@ services:
       - --working-directory=/go/mx-chain-go/cmd/node
       - --start-in-epoch=true
       - --destination-shard-as-observer=2
-      - --log-level=*:INFO
+      - --log-level=*:DEBUG
       - --log-save
       - --log-logger-name
       - --log-correlation
@@ -73,7 +73,7 @@ services:
       - --working-directory=/go/mx-chain-go/cmd/node
       - --start-in-epoch=true
       - --destination-shard-as-observer=metachain
-      - --log-level=*:INFO
+      - --log-level=*:DEBUG
       - --log-save
       - --log-logger-name
       - --log-correlation
