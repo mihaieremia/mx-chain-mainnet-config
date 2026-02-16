@@ -45,21 +45,21 @@
 ChainParametersByEpoch = [
     { EnableEpoch = 0, RoundDuration = 6000, RoundsPerEpoch = 14400, MinRoundsBetweenEpochs = 14400, ShardConsensusGroupSize = 63, ShardMinNumNodes = 400, MetachainConsensusGroupSize = 400, MetachainMinNumNodes = 400, Hysteresis = 0.2, Adaptivity = false, Offset = 0 },
     { EnableEpoch = 1763, RoundDuration = 6000, RoundsPerEpoch = 14400, MinRoundsBetweenEpochs = 14400, ShardConsensusGroupSize = 400, ShardMinNumNodes = 400, MetachainConsensusGroupSize = 400, MetachainMinNumNodes = 400, Hysteresis = 0.2, Adaptivity = false, Offset = 0 },
-    { EnableEpoch = 2032, RoundDuration = 6000, RoundsPerEpoch = 1200, MinRoundsBetweenEpochs = 1200, ShardConsensusGroupSize = 400, ShardMinNumNodes = 400, MetachainConsensusGroupSize = 400, MetachainMinNumNodes = 400, Hysteresis = 0.2, Adaptivity = false, Offset = 0 },
-    { EnableEpoch = 2033, RoundDuration = 600, RoundsPerEpoch = 24000, MinRoundsBetweenEpochs = 24000, ShardConsensusGroupSize = 400, ShardMinNumNodes = 400, MetachainConsensusGroupSize = 400, MetachainMinNumNodes = 400, Hysteresis = 0.2, Adaptivity = false, Offset = 2 }
+    { EnableEpoch = 2030, RoundDuration = 6000, RoundsPerEpoch = 3037, MinRoundsBetweenEpochs = 3037, ShardConsensusGroupSize = 400, ShardMinNumNodes = 400, MetachainConsensusGroupSize = 400, MetachainMinNumNodes = 400, Hysteresis = 0.2, Adaptivity = false, Offset = 0 },
+    { EnableEpoch = 2031, RoundDuration = 600, RoundsPerEpoch = 24000, MinRoundsBetweenEpochs = 24000, ShardConsensusGroupSize = 400, ShardMinNumNodes = 400, MetachainConsensusGroupSize = 400, MetachainMinNumNodes = 400, Hysteresis = 0.2, Adaptivity = false, Offset = 2 }
 ]
 
 # EpochChangeGracePeriodEnableEpoch represents the configuration of different grace periods for epoch change with their activation epochs
 EpochChangeGracePeriodByEpoch = [
     {EnableEpoch = 0, GracePeriodInRounds = 1 },
     {EnableEpoch = 1763, GracePeriodInRounds = 10 }, # Andromeda epoch comes with a longer grace period
-    {EnableEpoch = 2033, GracePeriodInRounds = 100 }, # Supernova epoch comes with an even longer grace period due to round duration reduction
+    {EnableEpoch = 2031, GracePeriodInRounds = 100 }, # Supernova epoch comes with an even longer grace period due to round duration reduction
 ]
 
 # ProcessConfigsByEpoch represents the configuration of process configuration parameters by epoch
 ProcessConfigsByEpoch = [
     { EnableEpoch = 0, MaxMetaNoncesBehind = 15, MaxMetaNoncesBehindForGlobalStuck = 30, MaxShardNoncesBehind = 15 },
-    { EnableEpoch = 2033, MaxMetaNoncesBehind = 75, MaxMetaNoncesBehindForGlobalStuck = 120, MaxShardNoncesBehind = 75 },
+    { EnableEpoch = 2031, MaxMetaNoncesBehind = 75, MaxMetaNoncesBehindForGlobalStuck = 120, MaxShardNoncesBehind = 75 },
 ]
 
 ProcessConfigsByRound = [
@@ -80,7 +80,7 @@ ProcessConfigsByRound = [
     MaxRoundsOfInactivityAccepted = 3
     },
     {
-    EnableRound = 29146392,
+    EnableRound = 29192400,
     MaxRoundsWithoutNewBlockReceived = 100,
     MaxRoundsWithoutCommittedBlock = 100,
     RoundModulusTriggerWhenSyncIsStuck = 200,
@@ -94,17 +94,17 @@ ProcessConfigsByRound = [
 
 EpochStartConfigsByEpoch = [
     { EnableEpoch = 0, GracePeriodRounds = 25, ExtraDelayForRequestBlockInfoInMilliseconds = 3000 },
-    { EnableEpoch = 2033, GracePeriodRounds = 250, ExtraDelayForRequestBlockInfoInMilliseconds = 220 },
+    { EnableEpoch = 2031, GracePeriodRounds = 250, ExtraDelayForRequestBlockInfoInMilliseconds = 220 },
 ]
 
 EpochStartConfigsByRound = [
     { EnableRound = 0, MaxRoundsWithoutCommittedStartInEpochBlock = 50 },
-    { EnableRound = 29146392, MaxRoundsWithoutCommittedStartInEpochBlock = 500 },
+    { EnableRound = 29192400, MaxRoundsWithoutCommittedStartInEpochBlock = 500 },
 ]
 
 ConsensusConfigsByEpoch = [
     { EnableEpoch = 0, NumRoundsToWaitBeforeSignalingChronologyStuck = 10 },
-    { EnableEpoch = 2033, NumRoundsToWaitBeforeSignalingChronologyStuck = 100 },
+    { EnableEpoch = 2031, NumRoundsToWaitBeforeSignalingChronologyStuck = 100 },
 ]
 
 [HardwareRequirements]
@@ -117,7 +117,7 @@ ConsensusConfigsByEpoch = [
         # The value of StartEpoch parameter for version 2 should be the same with the ScheduledMiniBlocksEnableEpoch flag from enableEpoch.toml file
         { StartEpoch = 613, StartRound = 0, Version = "2" },
         # TODO The value of StartEpoch parameter for version 3 should be the same with the SupernovaEnableEpoch flag from enableEpoch.toml file and StartRound the same with the SupernovaEnableRound flag from enableRounds.toml
-        { StartEpoch = 2033, StartRound = 29146392, Version = "3" },
+        { StartEpoch = 2031, StartRound = 29192400, Version = "3" },
     ]
 
 [StoragePruning]
@@ -707,7 +707,7 @@ ConsensusConfigsByEpoch = [
             MaxDeviationTimeInMilliseconds = 25
 
     [[Antiflood.ConfigsByRound]]
-        Round = 29146392
+        Round = 29192400
         NumConcurrentResolverJobs = 50
         NumConcurrentResolvingTrieNodesJobs = 30
 
