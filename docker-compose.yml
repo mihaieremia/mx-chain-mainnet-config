@@ -19,8 +19,8 @@ services:
     <<: *node-common
     container_name: mvx-observer-shard-0
     volumes:
-      - fresh-shard-0-db:/go/mx-chain-go/cmd/node/db
-      - fresh-shard-0-logs:/go/mx-chain-go/cmd/node/logs
+      - super-shard-0-db:/go/mx-chain-go/cmd/node/db
+      - super-shard-0-logs:/go/mx-chain-go/cmd/node/logs
     command:
       - --working-directory=/go/mx-chain-go/cmd/node
       - --start-in-epoch=true
@@ -35,8 +35,8 @@ services:
     <<: *node-common
     container_name: mvx-observer-shard-1
     volumes:
-      - fresh-shard-1-db:/go/mx-chain-go/cmd/node/db
-      - fresh-shard-1-logs:/go/mx-chain-go/cmd/node/logs
+      - super-shard-1-db:/go/mx-chain-go/cmd/node/db
+      - super-shard-1-logs:/go/mx-chain-go/cmd/node/logs
     command:
       - --working-directory=/go/mx-chain-go/cmd/node
       - --start-in-epoch=true
@@ -51,8 +51,8 @@ services:
     <<: *node-common
     container_name: mvx-observer-shard-2
     volumes:
-      - fresh-shard-2-db:/go/mx-chain-go/cmd/node/db
-      - fresh-shard-2-logs:/go/mx-chain-go/cmd/node/logs
+      - super-shard-2-db:/go/mx-chain-go/cmd/node/db
+      - super-shard-2-logs:/go/mx-chain-go/cmd/node/logs
     command:
       - --working-directory=/go/mx-chain-go/cmd/node
       - --start-in-epoch=true
@@ -67,8 +67,8 @@ services:
     <<: *node-common
     container_name: mvx-observer-metachain
     volumes:
-      - fresh-metachain-db:/go/mx-chain-go/cmd/node/db
-      - fresh-metachain-logs:/go/mx-chain-go/cmd/node/logs
+      - super-metachain-db:/go/mx-chain-go/cmd/node/db
+      - super-metachain-logs:/go/mx-chain-go/cmd/node/logs
     command:
       - --working-directory=/go/mx-chain-go/cmd/node
       - --start-in-epoch=true
@@ -102,14 +102,14 @@ services:
       start_period: 30s
 
 volumes:
-  fresh-shard-0-db:
-  fresh-shard-0-logs:
-  fresh-shard-1-db:
-  fresh-shard-1-logs:
-  fresh-shard-2-db:
-  fresh-shard-2-logs:
-  fresh-metachain-db:
-  fresh-metachain-logs:
+  super-shard-0-db:
+  super-shard-0-logs:
+  super-shard-1-db:
+  super-shard-1-logs:
+  super-shard-2-db:
+  super-shard-2-logs:
+  super-metachain-db:
+  super-metachain-logs:
 
 networks:
   squad-network:
