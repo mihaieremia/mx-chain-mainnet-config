@@ -632,7 +632,7 @@ ConsensusConfigsByEpoch = [
         UseTmpAsFilePath = true
 
 [Antiflood]
-    Enabled = true
+    Enabled = false
     [[Antiflood.ConfigsByRound]]
         Round = 0
         NumConcurrentResolverJobs = 50
@@ -929,7 +929,7 @@ ConsensusConfigsByEpoch = [
     [VirtualMachine.GasConfig]
         # The following values define the maximum amount of gas to be allocated for VM Queries coming from API
         # If set to 0, then MaxUInt64 will be used
-        ShardMaxGasPerVmQuery = 1500000000  #1.5b
+        ShardMaxGasPerVmQuery = 0  #1.5b
         MetaMaxGasPerVmQuery = 0  #unlimited
 
 [BuiltInFunctions]
