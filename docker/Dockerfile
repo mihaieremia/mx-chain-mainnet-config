@@ -41,7 +41,9 @@ ARG TARGETARCH
 RUN apt-get update -y && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder "/go/mx-chain-go/cmd/node" "/go/mx-chain-go/cmd/node/"
-COPY --from=builder "/lib_${TARGETARCH}/*" "/lib/" 2>/dev/null
+RUN --mount=from=builder,source=/lib_amd64,target=/tmp/lib_amd64 \
+    --mount=from=builder,source=/lib_arm64,target=/tmp/lib_arm64 \
+    mkdir -p /lib && cp /tmp/lib_${TARGETARCH}/* /lib/ 2>/dev/null || true
 
 WORKDIR /go/mx-chain-go/cmd/node/
 EXPOSE 8080
