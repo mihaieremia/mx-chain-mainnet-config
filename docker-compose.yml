@@ -1,13 +1,5 @@
 version: "3.8"
 
-# MultiversX XDP Squad — Host Network Mode
-#
-# Host networking gives AF_XDP direct access to the real NIC for
-# native/zero-copy mode. Each node uses a different REST API port
-# since they share the host network namespace.
-#
-# XDP requires: NET_RAW, NET_ADMIN, SYS_ADMIN (CAP_BPF), IPC_LOCK (UMEM mlock)
-
 x-node-common: &node-common
   build:
     context: .
@@ -15,7 +7,6 @@ x-node-common: &node-common
     args:
       GITHUB_ORG: ${GITHUB_ORG:-mihaieremia}
   restart: unless-stopped
-  network_mode: host
   cap_add:
     - NET_RAW
     - NET_ADMIN
@@ -26,26 +17,29 @@ x-node-common: &node-common
       soft: -1
       hard: -1
   healthcheck:
-    test: ["CMD", "curl", "-f", "http://localhost:${REST_PORT:-8080}/node/status"]
+    test: ["CMD", "curl", "-f", "http://localhost:8080/node/status"]
     interval: 30s
     timeout: 10s
     retries: 3
     start_period: 120s
+  networks:
+    - coolify
 
 services:
   observer-shard-0:
     <<: *node-common
     container_name: mvx-xdp-observer-shard-0
-    environment:
-      - REST_PORT=8080
     volumes:
       - xdp-shard-0-db:/go/mx-chain-go/cmd/node/db
       - xdp-shard-0-logs:/go/mx-chain-go/cmd/node/logs
+    ports:
+      - "8080:8080"
+      - "37373:37373/tcp"
+      - "37373:37373/udp"
     command:
       - --working-directory=/go/mx-chain-go/cmd/node
       - --start-in-epoch=true
       - --destination-shard-as-observer=0
-      - --rest-api-interface=:8080
       - --log-level=*:INFO,p2p:DEBUG
       - --log-save
       - --log-logger-name
@@ -55,16 +49,17 @@ services:
   observer-shard-1:
     <<: *node-common
     container_name: mvx-xdp-observer-shard-1
-    environment:
-      - REST_PORT=8081
     volumes:
       - xdp-shard-1-db:/go/mx-chain-go/cmd/node/db
       - xdp-shard-1-logs:/go/mx-chain-go/cmd/node/logs
+    ports:
+      - "8081:8080"
+      - "37374:37373/tcp"
+      - "37374:37373/udp"
     command:
       - --working-directory=/go/mx-chain-go/cmd/node
       - --start-in-epoch=true
       - --destination-shard-as-observer=1
-      - --rest-api-interface=:8081
       - --log-level=*:INFO,p2p:DEBUG
       - --log-save
       - --log-logger-name
@@ -74,16 +69,17 @@ services:
   observer-shard-2:
     <<: *node-common
     container_name: mvx-xdp-observer-shard-2
-    environment:
-      - REST_PORT=8082
     volumes:
       - xdp-shard-2-db:/go/mx-chain-go/cmd/node/db
       - xdp-shard-2-logs:/go/mx-chain-go/cmd/node/logs
+    ports:
+      - "8082:8080"
+      - "37375:37373/tcp"
+      - "37375:37373/udp"
     command:
       - --working-directory=/go/mx-chain-go/cmd/node
       - --start-in-epoch=true
       - --destination-shard-as-observer=2
-      - --rest-api-interface=:8082
       - --log-level=*:INFO,p2p:DEBUG
       - --log-save
       - --log-logger-name
@@ -93,16 +89,17 @@ services:
   observer-metachain:
     <<: *node-common
     container_name: mvx-xdp-observer-metachain
-    environment:
-      - REST_PORT=8083
     volumes:
       - xdp-metachain-db:/go/mx-chain-go/cmd/node/db
       - xdp-metachain-logs:/go/mx-chain-go/cmd/node/logs
+    ports:
+      - "8083:8080"
+      - "37376:37373/tcp"
+      - "37376:37373/udp"
     command:
       - --working-directory=/go/mx-chain-go/cmd/node
       - --start-in-epoch=true
       - --destination-shard-as-observer=metachain
-      - --rest-api-interface=:8083
       - --log-level=*:INFO,p2p:DEBUG
       - --log-save
       - --log-logger-name
@@ -118,3 +115,7 @@ volumes:
   xdp-shard-2-logs:
   xdp-metachain-db:
   xdp-metachain-logs:
+
+networks:
+  coolify:
+    external: true
