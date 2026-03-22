@@ -17,7 +17,7 @@ x-node-common: &node-common
       soft: -1
       hard: -1
   healthcheck:
-    test: ["CMD", "curl", "-f", "http://localhost:8080/node/status"]
+    test: ["CMD", "curl", "-sf", "http://localhost:8080/node/status"]
     interval: 30s
     timeout: 10s
     retries: 3
@@ -33,9 +33,9 @@ services:
       - xdp-shard-0-db:/go/mx-chain-go/cmd/node/db
       - xdp-shard-0-logs:/go/mx-chain-go/cmd/node/logs
     ports:
-      - "8080:8080"
-      - "37373:37373/tcp"
-      - "37373:37373/udp"
+      - "18080:8080"
+      - "47373:37373/tcp"
+      - "47373:37373/udp"
     command:
       - --working-directory=/go/mx-chain-go/cmd/node
       - --start-in-epoch=true
@@ -53,9 +53,9 @@ services:
       - xdp-shard-1-db:/go/mx-chain-go/cmd/node/db
       - xdp-shard-1-logs:/go/mx-chain-go/cmd/node/logs
     ports:
-      - "8081:8080"
-      - "37374:37373/tcp"
-      - "37374:37373/udp"
+      - "18081:8080"
+      - "47374:37373/tcp"
+      - "47374:37373/udp"
     command:
       - --working-directory=/go/mx-chain-go/cmd/node
       - --start-in-epoch=true
@@ -73,9 +73,9 @@ services:
       - xdp-shard-2-db:/go/mx-chain-go/cmd/node/db
       - xdp-shard-2-logs:/go/mx-chain-go/cmd/node/logs
     ports:
-      - "8082:8080"
-      - "37375:37373/tcp"
-      - "37375:37373/udp"
+      - "18082:8080"
+      - "47375:37373/tcp"
+      - "47375:37373/udp"
     command:
       - --working-directory=/go/mx-chain-go/cmd/node
       - --start-in-epoch=true
@@ -93,9 +93,9 @@ services:
       - xdp-metachain-db:/go/mx-chain-go/cmd/node/db
       - xdp-metachain-logs:/go/mx-chain-go/cmd/node/logs
     ports:
-      - "8083:8080"
-      - "37376:37373/tcp"
-      - "37376:37373/udp"
+      - "18083:8080"
+      - "47376:37373/tcp"
+      - "47376:37373/udp"
     command:
       - --working-directory=/go/mx-chain-go/cmd/node
       - --start-in-epoch=true
