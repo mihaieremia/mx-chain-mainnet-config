@@ -1,0 +1,109 @@
+version: "3.8"
+
+x-node-common: &node-common
+  build:
+    context: .
+    dockerfile: docker/Dockerfile
+    args:
+      GITHUB_ORG: ${GITHUB_ORG:-mihaieremia}
+  restart: unless-stopped
+  # XDP kernel bypass capabilities
+  cap_add:
+    - NET_RAW
+    - NET_ADMIN
+    - SYS_ADMIN
+    - IPC_LOCK
+  ulimits:
+    memlock:
+      soft: -1
+      hard: -1
+  healthcheck:
+    test: ["CMD", "curl", "-f", "http://localhost:8080/node/status"]
+    interval: 30s
+    timeout: 10s
+    retries: 3
+    start_period: 120s
+  networks:
+    - squad-network
+
+services:
+  observer-shard-0:
+    <<: *node-common
+    container_name: mvx-xdp-observer-shard-0
+    volumes:
+      - xdp-shard-0-db:/go/mx-chain-go/cmd/node/db
+      - xdp-shard-0-logs:/go/mx-chain-go/cmd/node/logs
+    ports:
+      - "37373:37373/tcp"
+      - "37373:37373/udp"
+    command:
+      - --working-directory=/go/mx-chain-go/cmd/node
+      - --start-in-epoch=true
+      - --destination-shard-as-observer=0
+      - --log-level=*:INFO,p2p:DEBUG
+      - --log-save
+      - --log-logger-name
+      - --log-correlation
+      - --display-name=XDP-Observer-Shard-0
+
+  observer-shard-1:
+    <<: *node-common
+    container_name: mvx-xdp-observer-shard-1
+    volumes:
+      - xdp-shard-1-db:/go/mx-chain-go/cmd/node/db
+      - xdp-shard-1-logs:/go/mx-chain-go/cmd/node/logs
+    command:
+      - --working-directory=/go/mx-chain-go/cmd/node
+      - --start-in-epoch=true
+      - --destination-shard-as-observer=1
+      - --log-level=*:INFO,p2p:DEBUG
+      - --log-save
+      - --log-logger-name
+      - --log-correlation
+      - --display-name=XDP-Observer-Shard-1
+
+  observer-shard-2:
+    <<: *node-common
+    container_name: mvx-xdp-observer-shard-2
+    volumes:
+      - xdp-shard-2-db:/go/mx-chain-go/cmd/node/db
+      - xdp-shard-2-logs:/go/mx-chain-go/cmd/node/logs
+    command:
+      - --working-directory=/go/mx-chain-go/cmd/node
+      - --start-in-epoch=true
+      - --destination-shard-as-observer=2
+      - --log-level=*:INFO,p2p:DEBUG
+      - --log-save
+      - --log-logger-name
+      - --log-correlation
+      - --display-name=XDP-Observer-Shard-2
+
+  observer-metachain:
+    <<: *node-common
+    container_name: mvx-xdp-observer-metachain
+    volumes:
+      - xdp-metachain-db:/go/mx-chain-go/cmd/node/db
+      - xdp-metachain-logs:/go/mx-chain-go/cmd/node/logs
+    command:
+      - --working-directory=/go/mx-chain-go/cmd/node
+      - --start-in-epoch=true
+      - --destination-shard-as-observer=metachain
+      - --log-level=*:INFO,p2p:DEBUG
+      - --log-save
+      - --log-logger-name
+      - --log-correlation
+      - --display-name=XDP-Observer-Metachain
+
+volumes:
+  xdp-shard-0-db:
+  xdp-shard-0-logs:
+  xdp-shard-1-db:
+  xdp-shard-1-logs:
+  xdp-shard-2-db:
+  xdp-shard-2-logs:
+  xdp-metachain-db:
+  xdp-metachain-logs:
+
+networks:
+  squad-network:
+    driver: bridge
