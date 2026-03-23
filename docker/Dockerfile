@@ -1,4 +1,4 @@
-FROM golang:1.23 AS builder
+FROM golang:1.24 AS builder
 LABEL maintainer="multiversx"
 
 ARG GITHUB_ORG=multiversx
