@@ -22,6 +22,8 @@ x-node-common: &node-common
     timeout: 10s
     retries: 3
     start_period: 120s
+  networks:
+    - coolify
 
 services:
   observer-shard-0:
@@ -115,8 +117,6 @@ volumes:
   xdp-metachain-logs:
 
 networks:
-  default:
-    driver: bridge
-    driver_opts:
-      com.docker.network.bridge.name: br-mvx-xdp
+  coolify:
+    external: true
 
