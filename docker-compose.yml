@@ -1,0 +1,53 @@
+version: "3.8"
+
+x-node-common: &node-common
+  build:
+    context: .
+    dockerfile: docker/Dockerfile
+    args:
+      GITHUB_ORG: ${GITHUB_ORG:-mihaieremia}
+  restart: unless-stopped
+  cap_add:
+    - NET_RAW
+    - NET_ADMIN
+    - SYS_ADMIN
+    - IPC_LOCK
+  ulimits:
+    memlock:
+      soft: -1
+      hard: -1
+  healthcheck:
+    test: ["CMD", "curl", "-sf", "http://localhost:8080/node/status"]
+    interval: 30s
+    timeout: 10s
+    retries: 3
+    start_period: 120s
+  networks:
+    - coolify
+
+services:
+  observer-shard-0:
+    <<: *node-common
+    container_name: mvx-xdp-observer-shard-0
+    volumes:
+      - xdp-shard-0-db:/go/mx-chain-go/cmd/node/db
+      - xdp-shard-0-logs:/go/mx-chain-go/cmd/node/logs
+    ports:
+      - "18080:8080"
+    command:
+      - --working-directory=/go/mx-chain-go/cmd/node
+      - --start-in-epoch=true
+      - --destination-shard-as-observer=0
+      - --log-level=*:INFO,p2p:DEBUG
+      - --log-save
+      - --log-logger-name
+      - --log-correlation
+      - --display-name=XDP-Observer-Shard-0
+
+volumes:
+  xdp-shard-0-db:
+  xdp-shard-0-logs:
+
+networks:
+  coolify:
+    external: true
