@@ -114,3 +114,9 @@ volumes:
   xdp-metachain-db:
   xdp-metachain-logs:
 
+networks:
+  default:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-mvx-xdp
+
