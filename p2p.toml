@@ -25,7 +25,7 @@
             PreventPortReuse = false
         [Node.Transports.XDP]
             Enabled = true
-            AccelerateQUIC = true
+            AccelerateQUIC = false  # Requires host networking for AF_XDP to route properly
             Interface = ""
             QueueSize = 2048
             BatchSize = 64
